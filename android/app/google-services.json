@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "61701393404",
+    "project_id": "ticket-trove-52381",
+    "storage_bucket": "ticket-trove-52381.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:61701393404:android:4c2b8a5cc7902199a38079",
+        "android_client_info": {
+          "package_name": "com.mionovatech.myapp.ticket_trove"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "61701393404-4l79unacqbip27fhvfptgff8sg4u9nff.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0BtNiv-n_vRBMYfhp6LPYs_xU90zh5Jw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "61701393404-4l79unacqbip27fhvfptgff8sg4u9nff.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "61701393404-492up5fm8enoqlln0g0j71gc6aia2d79.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mionovatech.myapp.ticketTrove"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
