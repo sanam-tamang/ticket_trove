@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:ticket_trove/common/typedef.dart';
@@ -5,7 +6,6 @@ import 'package:ticket_trove/common/utils/firebase_simpliefield_exception_messag
 import 'package:ticket_trove/core/failure/failure.dart';
 
 abstract class BaseAuthRepository {
- 
   FutureEither<User?> signUp(String email, String password);
   FutureEither<User?> signIn(String email, String password);
 }
@@ -14,6 +14,7 @@ class AuthRepository extends BaseAuthRepository {
   final FirebaseAuth _firebaseAuth;
 
   AuthRepository(this._firebaseAuth);
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   @override
   FutureEither<User?> signUp(String email, String password) async {
@@ -24,6 +25,11 @@ class AuthRepository extends BaseAuthRepository {
         email: email,
         password: password,
       );
+
+      await _firestore
+          .collection("user")
+          .doc(userCredential.user?.uid)
+          .set({"email": email, "uid": userCredential.user?.uid});
 
       // Return Right with user if sign up successful
       return Right(userCredential.user);
@@ -56,5 +62,4 @@ class AuthRepository extends BaseAuthRepository {
       return Left(FailureWithMessage(e.toString()));
     }
   }
-
 }

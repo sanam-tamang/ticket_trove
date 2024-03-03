@@ -45,7 +45,7 @@ class _SignInPageState extends State<SignInPage> {
             children: [
               Center(
                 child: Text(
-                  "Sign in",
+                  "Sign In",
                   style: Theme.of(context).textTheme.headlineLarge,
                 ),
               ),
@@ -55,7 +55,6 @@ class _SignInPageState extends State<SignInPage> {
                   labelText: "Email",
                   autofillHints: const [AutofillHints.email],
                   keyboardType: TextInputType.emailAddress,
-
                   controller: _emailController),
               const Gap(16),
               CustomTextField(
@@ -64,15 +63,14 @@ class _SignInPageState extends State<SignInPage> {
                 obscureText: true,
                 autofillHints: const [AutofillHints.password],
                 controller: _passwordController,
-                  keyboardType: TextInputType.visiblePassword,
-
+                keyboardType: TextInputType.visiblePassword,
               ),
               const Gap(32),
               BlocListener<AuthBloc, AuthState>(
                 listener: authListener,
                 child: Center(
                   child: ElevatedButton(
-                      onPressed: signup, child: const Text("Sign in")),
+                      onPressed: signIn, child: const Text("Sign in")),
                 ),
               ),
               const Gap(16),
@@ -94,7 +92,7 @@ class _SignInPageState extends State<SignInPage> {
               text: "Don't have an account?",
               children: const [
                 TextSpan(
-                    text: " Sign un", style: TextStyle(color: Colors.blue)),
+                    text: " Sign up", style: TextStyle(color: Colors.blue)),
               ],
               style: Theme.of(context).textTheme.labelLarge),
         ),
@@ -102,7 +100,7 @@ class _SignInPageState extends State<SignInPage> {
     );
   }
 
-  void signup() {
+  void signIn() {
     sl<AuthBloc>().add(AuthEvent.signIn(
       email: _emailController.text.trim().toLowerCase(),
       password: _passwordController.text,

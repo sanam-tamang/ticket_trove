@@ -53,7 +53,7 @@ class _SignUpPageState extends State<SignUpPage> {
               children: [
                 Center(
                   child: Text(
-                    "Sign up",
+                    "Sign Up",
                     style: Theme.of(context).textTheme.headlineLarge,
                   ),
                 ),
@@ -73,8 +73,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     obscureText: true,
                     autofillHints: const [AutofillHints.password],
                     validator: CustomValidator.password,
-                  keyboardType: TextInputType.visiblePassword,
-
+                    keyboardType: TextInputType.visiblePassword,
                     controller: _passwordController),
                 const Gap(32),
                 BlocListener<AuthBloc, AuthState>(

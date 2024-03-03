@@ -5,6 +5,7 @@ import 'package:dartz/dartz.dart';
 
 import 'package:ticket_trove/common/typedef.dart';
 import 'package:ticket_trove/common/utils/firebase_simpliefield_exception_message.dart';
+import 'package:ticket_trove/common/utils/string_parser.dart';
 import 'package:ticket_trove/core/failure/failure.dart';
 import 'package:ticket_trove/core/repositories/user_repository.dart';
 import 'package:ticket_trove/features/ticket/models/ticket.dart';
@@ -29,9 +30,23 @@ class TicketRepository implements BaseTicketRepository {
     try {
       final uid = await _getUid();
       await _firestore
+          .collection("user")
+          .doc(uid)
           .collection('ticket')
           .doc(ticket.id)
           .set(ticket.toJson()..addAll({"userId": uid}));
+      await _firestore
+          .collection("user")
+          .doc(uid)
+          .collection('box-office')
+          .doc(uid)
+          .set({
+        "totalTicketsQuantity":
+            FieldValue.increment(stringToIntParser(ticket.quantity)),
+        "turnOver": FieldValue.increment(stringToDoubleParser(ticket.quantity) *
+            stringToDoubleParser(ticket.pricePerTicket))
+      }, SetOptions(merge: true));
+
       return const Right("Ticket created");
     } on FirebaseException catch (e) {
       return Left(FailureWithMessage(
@@ -44,7 +59,11 @@ class TicketRepository implements BaseTicketRepository {
   @override
   FutureEither<String> updateTicket(Ticket ticket) async {
     try {
+      final uid = await _getUid();
+
       await _firestore
+          .collection("user")
+          .doc(uid)
           .collection('ticket')
           .doc(ticket.id)
           .update(ticket.toJson());
@@ -66,20 +85,29 @@ class TicketRepository implements BaseTicketRepository {
   FutureEither<String> updateTicketStatus(
       {required String userId, required String ticketId}) async {
     try {
-      final ticketData =
-          await _firestore.collection('ticket').doc(ticketId).get();
+      final uid = await _getUid();
+
+      final ticketData = await _firestore
+          .collection("user")
+          .doc(uid)
+          .collection('ticket')
+          .doc(ticketId)
+          .get();
       final mapTicket = ticketData.data();
       if (mapTicket?['userId'] == userId &&
           mapTicket?['ticketStatus'] == "available") {
-     await _firestore.collection('ticket').doc(ticketId).update({
+        await _firestore
+            .collection("user")
+            .doc(uid)
+            .collection('ticket')
+            .doc(ticketId)
+            .update({
           'ticketStatus': "booked",
         });
         return const Right("Ticket is available");
       } else {
         return Left(TicketAvailabilityFailure());
       }
-
-     
     } on FirebaseException catch (e) {
       return Left(FailureWithMessage(
           getFirebaseSimplifiedExceptionMessage(e.toString())));
