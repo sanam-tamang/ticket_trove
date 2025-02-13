@@ -56,6 +56,7 @@ dependencies:
   cached_network_image: ^3.3.1
   flutter_barcode_scanner: ^2.0.0
   flutter_native_splash: ^2.3.10
+  web: ^0.4.2
 
 flutter_native_splash:
   color: "#42a5f5"
@@ -92,6 +93,9 @@ flutter_launcher_icons:
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter packages.
+dependency_overrides:
+  web: ^0.4.0
+
 flutter:
 
   # The following line ensures that the Material Icons font is

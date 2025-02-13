@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ticket_trove/common/widgets/custom_text_field.dart';
+import 'package:ticket_trove/common/widgets/responsive.dart';
 import 'package:ticket_trove/dependency_injection.dart';
 import 'package:ticket_trove/features/auth/auth_listener.dart';
 import 'package:ticket_trove/features/auth/blocs/auth_bloc/auth_bloc.dart';
@@ -36,46 +37,48 @@ class _SignInPageState extends State<SignInPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 12),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Center(
-                child: Text(
-                  "Sign In",
-                  style: Theme.of(context).textTheme.headlineLarge,
+      body: AutoResponsive(
+        child: Center(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Center(
+                  child: Text(
+                    "Sign In",
+                    style: Theme.of(context).textTheme.headlineLarge,
+                  ),
                 ),
-              ),
-              const Gap(32),
-              CustomTextField(
-                  hintText: "Enter your email",
-                  labelText: "Email",
-                  autofillHints: const [AutofillHints.email],
-                  keyboardType: TextInputType.emailAddress,
-                  controller: _emailController),
-              const Gap(16),
-              CustomTextField(
-                hintText: "Enter your password",
-                labelText: "password",
-                obscureText: true,
-                autofillHints: const [AutofillHints.password],
-                controller: _passwordController,
-                keyboardType: TextInputType.visiblePassword,
-              ),
-              const Gap(32),
-              BlocListener<AuthBloc, AuthState>(
-                listener: authListener,
-                child: Center(
-                  child: ElevatedButton(
-                      onPressed: signIn, child: const Text("Sign in")),
+                const Gap(32),
+                CustomTextField(
+                    hintText: "Enter your email",
+                    labelText: "Email",
+                    autofillHints: const [AutofillHints.email],
+                    keyboardType: TextInputType.emailAddress,
+                    controller: _emailController),
+                const Gap(16),
+                CustomTextField(
+                  hintText: "Enter your password",
+                  labelText: "password",
+                  obscureText: true,
+                  autofillHints: const [AutofillHints.password],
+                  controller: _passwordController,
+                  keyboardType: TextInputType.visiblePassword,
                 ),
-              ),
-              const Gap(16),
-              _buildDoNotHaveAnAccount(context),
-            ],
+                const Gap(32),
+                BlocListener<AuthBloc, AuthState>(
+                  listener: authListener,
+                  child: Center(
+                    child: ElevatedButton(
+                        onPressed: signIn, child: const Text("Sign in")),
+                  ),
+                ),
+                const Gap(16),
+                _buildDoNotHaveAnAccount(context),
+              ],
+            ),
           ),
         ),
       ),

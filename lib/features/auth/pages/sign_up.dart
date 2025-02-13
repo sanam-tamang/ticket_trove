@@ -4,6 +4,7 @@ import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ticket_trove/common/utils/validation.dart';
 import 'package:ticket_trove/common/widgets/custom_text_field.dart';
+import 'package:ticket_trove/common/widgets/responsive.dart';
 import 'package:ticket_trove/dependency_injection.dart';
 import 'package:ticket_trove/features/auth/auth_listener.dart';
 import 'package:ticket_trove/features/auth/blocs/auth_bloc/auth_bloc.dart';
@@ -42,50 +43,52 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Form(
-          key: _formKey,
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(horizontal: 12),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Center(
-                  child: Text(
-                    "Sign Up",
-                    style: Theme.of(context).textTheme.headlineLarge,
+      body: AutoResponsive(
+        child: Center(
+          child: Form(
+            key: _formKey,
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Center(
+                    child: Text(
+                      "Sign Up",
+                      style: Theme.of(context).textTheme.headlineLarge,
+                    ),
                   ),
-                ),
-                const Gap(32),
-                CustomTextField(
-                  hintText: "Enter your email",
-                  labelText: "Email",
-                  autofillHints: const [AutofillHints.email],
-                  controller: _emailController,
-                  validator: CustomValidator.email,
-                  keyboardType: TextInputType.emailAddress,
-                ),
-                const Gap(16),
-                CustomTextField(
-                    hintText: "Enter your password",
-                    labelText: "password",
-                    obscureText: true,
-                    autofillHints: const [AutofillHints.password],
-                    validator: CustomValidator.password,
-                    keyboardType: TextInputType.visiblePassword,
-                    controller: _passwordController),
-                const Gap(32),
-                BlocListener<AuthBloc, AuthState>(
-                  listener: authListener,
-                  child: Center(
-                    child: ElevatedButton(
-                        onPressed: signup, child: const Text("Sign up")),
+                  const Gap(32),
+                  CustomTextField(
+                    hintText: "Enter your email",
+                    labelText: "Email",
+                    autofillHints: const [AutofillHints.email],
+                    controller: _emailController,
+                    validator: CustomValidator.email,
+                    keyboardType: TextInputType.emailAddress,
                   ),
-                ),
-                const Gap(16),
-                _buildHaveAnAccountWidget(context),
-              ],
+                  const Gap(16),
+                  CustomTextField(
+                      hintText: "Enter your password",
+                      labelText: "password",
+                      obscureText: true,
+                      autofillHints: const [AutofillHints.password],
+                      validator: CustomValidator.password,
+                      keyboardType: TextInputType.visiblePassword,
+                      controller: _passwordController),
+                  const Gap(32),
+                  BlocListener<AuthBloc, AuthState>(
+                    listener: authListener,
+                    child: Center(
+                      child: ElevatedButton(
+                          onPressed: signup, child: const Text("Sign up")),
+                    ),
+                  ),
+                  const Gap(16),
+                  _buildHaveAnAccountWidget(context),
+                ],
+              ),
             ),
           ),
         ),
